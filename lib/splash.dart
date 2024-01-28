@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class Splash extends StatefulWidget {
   const Splash({super.key});
@@ -14,7 +15,7 @@ class _SplashState extends State<Splash> {
   @override
   void initState() {
     Timer(
-      Duration(seconds: 3),
+      Duration(seconds: 10),
           ()=> Navigator.of(context).pushReplacementNamed('/dashboard'),
     );
     super.initState();
@@ -23,12 +24,14 @@ class _SplashState extends State<Splash> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
         centerTitle: true,
         title: Text('Splash'),
       ),
       body:Center(
-        child: Text('This is splash.'),
+          // child: Image.asset('assets/images/infinity.gif'),
+        child: SvgPicture.asset('assets/images/Belo.svg'),
       ),
     );
   }
