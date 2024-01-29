@@ -16,7 +16,7 @@ class _SplashState extends State<Splash> {
   void initState() {
     Timer(
       Duration(seconds: 10),
-          ()=> Navigator.of(context).pushReplacementNamed('/dashboard'),
+          ()=> Navigator.of(context).pushReplacementNamed('/ListViewScreen'),
     );
     super.initState();
   }

@@ -5,6 +5,8 @@ import 'package:newpro/grid_view.dart';
 import 'package:newpro/dashboard.dart';
 import 'package:newpro/splash.dart';
 
+import 'list_view.dart';
+
 void main() {
   runApp(MaterialApp(
     title: 'Flutter Demo',
@@ -17,6 +19,7 @@ void main() {
       '/':(BuildContext context)=>Splash(),
       '/gridView':(context)=>GridViewScreen(),
       '/dashboard':(context)=>Dashboard(),
+      '/ListViewScreen':(context)=>ListViewScreen(),
     },
     debugShowCheckedModeBanner:false,
   ));
