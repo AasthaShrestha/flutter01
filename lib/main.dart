@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:newpro/grid_view.dart';
 import 'package:newpro/dashboard.dart';
 import 'package:newpro/splash.dart';
+import 'package:newpro/top_picks.dart';
 
 import 'list_view.dart';
 
@@ -20,6 +21,8 @@ void main() {
       '/gridView':(context)=>GridViewScreen(),
       '/dashboard':(context)=>Dashboard(),
       '/ListViewScreen':(context)=>ListViewScreen(),
+      '/topPicks':(context)=>TopPicks(),
+
     },
     debugShowCheckedModeBanner:false,
   ));
