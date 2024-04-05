@@ -1,61 +1,128 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:newpro/service/firebase_auth_service.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+import 'controller/counter_controller.dart';
 
 class Dashboard extends StatelessWidget {
   const Dashboard({super.key});
 
   @override
   Widget build(BuildContext context) {
+
+    final CounterController counterController=Get.find();
+
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Profile'),
-        actions: [
-          Icon(Icons.plus_one)
-        ],
-      ),
-   body:ListView(
-    children:[
-      SizedBox(height: 10),
-      Center(child: Image.network("https://scontent.fjkr2-1.fna.fbcdn.net/v/t39.30808-6/385732520_1105206147527863_3394160267794434762_n.jpg?_nc_cat=111&cb=99be929b-8d691acd&ccb=1-7&_nc_sid=efb6e6&_nc_ohc=C3T7GJOV14MAX_fzHZW&_nc_ht=scontent.fjkr2-1.fna&oh=00_AfDkFZugvOqSjgaN8c22fI9FK9rceNd3ngaG-AKpKtk0Gg&oe=65BAB99A"
-      ,height:700,
-        width :MediaQuery.of(context).size.width,
-      fit:BoxFit.cover)),
-        Positioned(
-          top: 20, // Adjust the position of the text as needed
-          left: 20,
-          child: Center(
-            child: Text(
-              'Email:aasthashrestha008@gmail.com',
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
+        appBar: AppBar(
+          title: Text('Dashboard'),
+          centerTitle: true,
+          actions: [
+            GestureDetector(
+              onTap: () async {
+                await showDialog(
+                    context: context,
+                    builder: (BuildContext dialogContext) {
+                      return AlertDialog(
+                        icon: Icon(Icons.warning),
+                        title: Text('Signout User'),
+                        content: Text('Are you sure you want to Signout?'),
+                        actions: [
+                          InkWell(
+                              child: Text('Ok'),
+                              onTap: () async{
+                                final firebaseAuthService =
+                                FirebaseAuthService();
+                                firebaseAuthService.signout();
+                                final SharedPreferences prefs=
+                                  await SharedPreferences.getInstance();
+
+                                await prefs.remove('id');
+                                Navigator.of(dialogContext).pop();
+                                Navigator.of(context)
+                                    .pushReplacementNamed('/login');
+                              }),
+                          InkWell(
+                              child: Text('Cancel'),
+                              onTap: () {
+                                Navigator.of(dialogContext).pop();
+                              }),
+                        ],
+                      );
+                    });
+              },
+              child: Icon(Icons.logout),
+            ),
+          ],
+        ),
+        body: ListView(
+          children: [
+            // SizedBox(
+            //   height: 5,
+            // ),
+            Image(
+              image: Image.asset('assets/images/scene.jpg').image,
+              height: 500,
+              width: MediaQuery.of(context).size.width,
+              fit: BoxFit.fill,
+            ),
+            SizedBox(
+              height: 20,
+            ),
+
+            Container(
+              padding:EdgeInsets.all(20),
+              child: Column(
+                children:[
+                  Obx(() {
+                      return Text('The counter Value is ${counterController.counter}');
+                    }
+                  ),
+                  SizedBox(height: 20,),
+                  IconButton(icon:Icon(Icons.add),onPressed: (){
+                    counterController.increment();
+                  },),
+                  SizedBox(height: 20,),
+                  IconButton(icon: Icon(Icons.remove), onPressed: (){
+                    counterController.decrement();
+                  },),
+                ],
               ),
             ),
-          ),
-        ),
-      SizedBox(height: 10),
-       Center(
-         child: Text('Name:Aastha Shrestha',style: TextStyle(fontSize:24,fontWeight:FontWeight.bold,color: Colors.black87),
-         ),
-       ),
-      SizedBox(height: 5),
-      Center(child: Text('Address:Pokhara,Nepal',style:TextStyle(fontSize:19),)),
+            Center(
+              child: Text(
+                'Beautiful scenery',
+                style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
+              ),
+            ),
+            SizedBox(
+              height: 20,
+            ),
+            Text(
+              'Beautiful scenery is like a lovely painting. Imagine a big blue sky with fluffy white clouds. '
+                  'Below, there is a bright green field full of pretty flowers of all colors. A little stream flows gently, '
+                  'sparkling in the sunlight. Tall trees stand around, their leaves rustling in the wind. Birds are singing sweet '
+                  'songs, flying high in the sky. Far away, you can see big hills covered with green trees. The sun sets, painting '
+                  'the sky with colors of orange and pink. This is beautiful scenery, which makes us feel happy and calm. It’s like'
+                  ' nature’s own art.',
 
-      SizedBox(height: 90),
-      Text('Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'
-          ' Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure'
-          ' dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat'
-          ' non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.Lorem ipsum dolor sit amet, consectetur '
-          'adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud '
-          'exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate '
-          'velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia '
-          'deserunt mollit anim id est laborum.Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt'
-          ' ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea '
-          'commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.'
-          ' Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim '
-          'id est laborum.',style:TextStyle(fontSize:19),),
-    ],
-     )
-     );
-   }
- }
+              style: TextStyle(fontSize: 20),
+            ),
+            SizedBox(
+              height: 20,
+            ),
+
+
+            Text('Beautiful scenery is like a magical painting come to life. It’s the kind of view that takes your breath'
+              ' away and makes your heart feel light. Imagine standing on a hilltop, looking out at a wide, open field. The field is '
+              'a bright, vibrant green, full of tall, waving grass. In the distance, there are trees with leaves in all shades of green.'
+              'Some trees have flowers in pink, yellow, and white, adding splashes of color to the scene. Beyond the trees, you can see'
+              'mountains.',
+                style: TextStyle(fontSize: 20))
+          ],
+        ),
+
+    );
+  }
+}

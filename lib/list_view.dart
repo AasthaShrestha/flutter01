@@ -8,6 +8,7 @@ class ListViewScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: ListView.builder(
+
         itemCount: modelList.length,
         itemBuilder: (BuildContext context,int index) {
           final modelData=modelList[index];
